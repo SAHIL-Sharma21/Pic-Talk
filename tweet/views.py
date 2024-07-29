@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import Tweet
-from .forms import TweetForm
+from .forms import TweetForm, UserRegistrationForm
 from django.shortcuts import get_object_or_404, redirect #like ORM which used to talk to database
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
 
 # Create your views here.
 #testing view
@@ -17,6 +19,8 @@ def tweet_list(request):
 
 
 #create tweets
+#using decorators to protect thuis route
+@login_required  
 def create_tweet(request):
     if request.method == "POST":
         form = TweetForm(request.POST, request.FILES) #handling form/ making form -> Django superpower
@@ -31,6 +35,7 @@ def create_tweet(request):
 
 
 #edit tweet / form
+@login_required
 def tweet_edit(request, tweet_id):
     tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user) #user is forn the authorized user who owns that particul;ar tweet, he canot delete othwer people tweer
     if request.method == "POST":
@@ -45,6 +50,7 @@ def tweet_edit(request, tweet_id):
     return render(request, 'tweet_form.html', {'form': form})
 
 #tweet delete
+@login_required
 def tweet_delete(request, tweet_id):
     tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
     if request.method == "POST":
@@ -52,3 +58,19 @@ def tweet_delete(request, tweet_id):
         return redirect('tweet_list')
     return render(request, 'tweet_confirm_delete.html', {'tweet': tweet})
  
+
+#new view for register
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password1'])
+            user.save()
+            login(request, user)
+            return redirect('tweet_list')
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
