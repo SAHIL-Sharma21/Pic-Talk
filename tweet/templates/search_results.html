@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+search results
+{% endblock %}
+
+{% block content %}
+<h2>search results</h2>
+
+{% if query %}
+<p>Results for: {{query}}</p>
+{% else %}
+<p> No Query entered.</p>
+{% endif %}
+
+<div class="list-group">
+    {% for tweet in tweets %}
+        <div>
+            <img src="{{tweet.photo.url}}" alt="">
+            <h5 class="mb-1">{{tweet.user.username}}</h5>
+            <p class="mb-1">{{tweet.text}}</p>
+        </div>
+
+        {%empty%}
+            <p>No Results Found!</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
