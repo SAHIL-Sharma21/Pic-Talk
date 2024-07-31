@@ -84,3 +84,9 @@ def search_tweets(request):
     else:
         tweets = Tweet.objects.none()
     return render(request, 'search_results.html',{'tweets': tweets, 'query':query})
+
+
+#search result
+def search_result(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id)
+    return render(request, 'result_page.html', {'tweet': tweet})

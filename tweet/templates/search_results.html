@@ -1,29 +1,34 @@
 {% extends "layout.html" %}
 
 {% block title %}
-search results
+Search Results
 {% endblock %}
 
 {% block content %}
-<h2>search results</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">Search Results</h2>
 
-{% if query %}
-<p>Results for: {{query}}</p>
-{% else %}
-<p> No Query entered.</p>
-{% endif %}
+    {% if query %}
+        <p class="lead">Results for: <strong>{{ query }}</strong></p>
+    {% else %}
+        <p class="lead">No Query Entered.</p>
+    {% endif %}
 
-<div class="list-group">
-    {% for tweet in tweets %}
-        <div>
-            <img src="{{tweet.photo.url}}" alt="">
-            <h5 class="mb-1">{{tweet.user.username}}</h5>
-            <p class="mb-1">{{tweet.text}}</p>
-        </div>
+    <div class="list-group">
+        {% for tweet in tweets %}
+            <a href="{% url "search_result" tweet.id %}" class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ tweet.user.username }}</h5>
+                </div>
+                <img src="{{ tweet.photo.url }}" class="img-fluid rounded mb-2" alt="" style="max-height: 200px; object-fit: cover;">
+                <p class="mb-1">{{ tweet.text }}</p>
+            </a>
 
-        {%empty%}
-            <p>No Results Found!</p>
+        {% empty %}
+            <div class="alert alert-info" role="alert">
+                No Results Found!
+            </div>
     {% endfor %}
+    </div>
 </div>
-
 {% endblock %}

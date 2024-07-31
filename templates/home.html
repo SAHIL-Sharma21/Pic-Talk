@@ -5,10 +5,13 @@ Pic Talk | Home page
 {% endblock %}
 
 {% block content %}
-<div class="container text-center mt-5">
-    <h2 class="mt-4 ">Your pic talk is here just start sharing your thouhgts</h2>
-    <img src="https://img.freepik.com/free-vector/content-editor-editing-feed-vector_53876-77882.jpg?t=st=1722359238~exp=1722362838~hmac=3fcfba01c42339e10ad7fdea44b8ed1a40a5ce1999bddfccf3468f97194b1f2c&w=740" alt="img" class="img-fluid mb-4" 
-    style="max-width: 50%; height: 50%; border-radius: 15px;">
-    <a href="{% url "tweet_list" %}" class="btn btn-success">Go to Tweets Page</a>
+<div class="container d-flex justify-content-center align-items-center  mt-5">
+    <div class="card" style="width: 18rem;">
+        <img src="https://img.freepik.com/free-vector/content-editor-editing-feed-vector_53876-77882.jpg?t=st=1722359238~exp=1722362838~hmac=3fcfba01c42339e10ad7fdea44b8ed1a40a5ce1999bddfccf3468f97194b1f2c&w=740" class="card-img-top" alt="img">
+        <div class="card-body">
+          <h2 class="card-text">Your pic talk is here just start sharing your thoughts</h2>
+          <a href="{% url 'tweet_list' %}" class="btn btn-success">Tweets Page</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

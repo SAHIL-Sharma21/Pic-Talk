@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Tweet Page
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Search Result Tweet</h2>
+
+    <div class="card" style="width: 100%; max-width: 600px; margin: auto;">
+        <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Image" style="height: 300px; object-fit: cover;">
+        <div class="card-body">
+            <h4 class="card-text">{{ tweet.text }}</h4>
+            <p class="card-title bg-warning text-dark  rounded p-2" style="width: 10%; padding: 5px;">{{ tweet.user.username }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
